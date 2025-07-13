@@ -33,6 +33,14 @@ public class RegistroDepartamentos extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         
+        JPanel panelSuperior = new JPanel();
+        panelSuperior.add(new JLabel("Nombre del Departamento:"));
+        txtNombre = new JTextField(20);
+        panelSuperior.add(txtNombre);
+        JButton btnAgregar = new JButton("Agregar Departamento");
+        btnAgregar.addActionListener(e -> agregarDepartamento());
+        panelSuperior.add(btnAgregar);
+        add(panelSuperior, BorderLayout.NORTH);
         
         
     }
