@@ -10,11 +10,20 @@ package proyecto2;
  */
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.table.DefaultTableModel;
 
 
 public class RegistroArticulos extends JFrame {
     
     //agregar variables a usar
+    
+    private JTable tablaDepartamentos;
+    private DefaultTableModel modeloDepartamentos;
+    
+    private JTextField txtNombreArticulo;
+    
+    private Departamento[] pilaDeptos;
+    private int topeDeptos;
     
     
     public RegistroArticulos() {
