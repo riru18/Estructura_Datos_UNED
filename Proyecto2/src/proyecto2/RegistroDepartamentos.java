@@ -19,7 +19,11 @@ public class RegistroDepartamentos extends JFrame {
     
     //agregar variables a usar
     
+    private static final int MAX_DEPTOS = 20;
+    private Departamento[] pilaDepartamentos = new Departamento[MAX_DEPTOS];
+    private int tope = -1;
     
+    private static int idDeptoActual = 1;
    
 
     private JTextField txtNombre;
@@ -32,6 +36,7 @@ public class RegistroDepartamentos extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        
         
         JPanel panelSuperior = new JPanel();
         panelSuperior.add(new JLabel("Nombre del Departamento:"));
