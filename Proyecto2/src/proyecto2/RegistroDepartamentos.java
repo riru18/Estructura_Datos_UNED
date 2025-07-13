@@ -60,8 +60,18 @@ public class RegistroDepartamentos extends JFrame {
     private void agregarDepartamento() {
         String nombre = txtNombre.getText().trim();
 
-        
-            
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre.");
+            return;
+        }
+        if (tope >= MAX_DEPTOS - 1) {
+            JOptionPane.showMessageDialog(this, "Se alcanzó el límite de departamentos.");
+            return;
+        }
+
+        Departamento nuevo = new Departamento(idDeptoActual++, nombre);
+        pilaDepartamentos[++tope] = nuevo;
+
 
     }
     
