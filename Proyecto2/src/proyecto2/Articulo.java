@@ -8,7 +8,6 @@ package proyecto2;
  *
  * @author Ricardo
  */
-public class Departamento {
-
+public class Articulo {
     
 }
