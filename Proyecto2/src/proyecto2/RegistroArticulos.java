@@ -17,18 +17,26 @@ public class RegistroArticulos extends JFrame {
     
     //agregar variables a usar
     
-    private JTable tablaDepartamentos;
-    private DefaultTableModel modeloDepartamentos;
+    private Departamento[] pila;
+    private int tope;
     
+    private JTable tabla;
+    private DefaultTableModel modelo;
+
     private JTextField txtNombreArticulo;
+    private JComboBox<String> cmbCategoria;
+
+    private static final String[] CATEGORIAS = {
+        "Ropa y accesorios", "Electrónica", "Hogar y muebles",
+        "Belleza y cuidado personal", "Deportes y aire libre",
+        "Juguetes y juegos", "Alimentos y bebidas"
+    };
     
-    private Departamento[] pilaDeptos;
-    private int topeDeptos;
+        
     
-    
-    public RegistroArticulos(Departamento[] pilaDeptos, int topeDeptos) {
-        this.pilaDeptos = pilaDeptos;
-        this.topeDeptos = topeDeptos;
+    public RegistroArticulos(Departamento[] pilaExistente, int topeExistente) {
+        this.pila = pilaExistente;
+        this.tope = topeExistente;
         
         setTitle("Registro de Artículos");
         setSize(900,600);
@@ -36,35 +44,65 @@ public class RegistroArticulos extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         
-        modeloDepartamentos = new DefaultTableModel(new Object[]{"ID", "Nombre"}, 0);
-        tablaDepartamentos = new JTable(modeloDepartamentos);
-        tablaDepartamentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollTabla = new JScrollPane(tablaDepartamentos);
-        add(scrollTabla, BorderLayout.CENTER);
-        
-        JPanel panelArticulo = new JPanel();
-        panelArticulo.setLayout(new GridLayout(3, 2, 10, 10));
-        panelArticulo.setBorder(BorderFactory.createTitledBorder("Agregar nuevo artículo"));
+        modelo = new DefaultTableModel(new Object[]{"ID", "Nombre"}, 0);
+        tabla = new JTable(modelo);
+        tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        add(new JScrollPane(tabla), BorderLayout.CENTER);
 
-        panelArticulo.add(new JLabel("Nombre del Artículo:"));
+        JPanel panel = new JPanel(new GridLayout(3, 2));
+        panel.setBorder(BorderFactory.createTitledBorder("Nuevo artículo"));
+
+        panel.add(new JLabel("Nombre:"));
         txtNombreArticulo = new JTextField();
-        panelArticulo.add(txtNombreArticulo);
-        
-        JButton btnAgregar = new JButton("Agregar Artículo");
-        btnAgregar.addActionListener(e -> registrarArticulo());
-        panelArticulo.add(btnAgregar);
+        panel.add(txtNombreArticulo);
 
-        add(panelArticulo, BorderLayout.SOUTH);
-        
-        llenarTablaDepartamentos();
+        panel.add(new JLabel("Categoría:"));
+        cmbCategoria = new JComboBox<>(new String[]{
+            "Ropa y accesorios", "Electrónica", "Hogar y muebles",
+            "Belleza y cuidado personal", "Deportes y aire libre",
+            "Juguetes y juegos", "Alimentos y bebidas"
+        });
+        panel.add(cmbCategoria);
+
+        JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.addActionListener(e -> guardarArticulo());
+        panel.add(btnGuardar);
+
+        add(panel, BorderLayout.SOUTH);
+        actualizarTabla();
     }
     
-    private void llenarTablaDepartamentos(){
-        
+    private void actualizarTabla() {
+        modelo.setRowCount(0);
+        for (int i = tope; i >= 0; i--) {
+            modelo.addRow(new Object[]{pila[i].getId(), pila[i].getNombre()});
+        }
     }
-    
-    private void registrarArticulo(){
 
+    private void guardarArticulo() {
+        int fila = tabla.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un departamento.");
+            return;
+        }
+
+        String nombre = txtNombreArticulo.getText().trim();
+        String categoria = (String) cmbCategoria.getSelectedItem();
+
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar el nombre del artículo.");
+            return;
+        }
+
+        Departamento depto = pila[tope - fila]; // LIFO
+        Articulo nuevo = new Articulo(Proyecto2.getNuevoIdArticulo(), nombre, categoria);
+
+        if (!depto.agregarArticulo(nuevo)) {
+            JOptionPane.showMessageDialog(this, "Lista de artículos llena.");
+            return;
+        }
+        
+        txtNombreArticulo.setText("");
     }
     
 }

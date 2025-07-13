@@ -24,13 +24,23 @@ public class Departamento {
     
     public boolean agregarArticulo(Articulo art) {
         if ((fin + 1) % MAX_ARTICULOS == frente) {
-            return false; // cola llena 
+            return false; // cola llena
         }
         articulos[fin] = art;
         fin = (fin + 1) % MAX_ARTICULOS;
         return true;
     }
 
+    public boolean eliminarArticulo() {
+    if (frente == fin) {
+        return false; // Cola vacía
+    }
+
+    articulos[frente] = null;
+    frente = (frente + 1) % MAX_ARTICULOS;
+    return true;
+}
+    
     public Articulo[] getArticulos() {
         Articulo[] resultado = new Articulo[(fin - frente + MAX_ARTICULOS) % MAX_ARTICULOS];
         int idx = 0;

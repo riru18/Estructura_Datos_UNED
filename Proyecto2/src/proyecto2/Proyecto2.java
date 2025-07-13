@@ -16,9 +16,15 @@ import java.awt.*;
 
 public class Proyecto2 extends JFrame{
     
+    private static final int MAX_DEPARTAMENTOS = 20;
+    private static Departamento[] pilaDepartamentos = new Departamento[MAX_DEPARTAMENTOS];
+    private static int tope = -1;
+
+    private static int idDepto = 1;
+    private static int idArticulo = 1;
+    
     public Proyecto2() {
         // configuración del frame principal para el programa.
-        // tomando de referencia mi Proyecto1 y adaptado para el presente proyecto
         setTitle("Gestión de Tienda Departamental y de Artículos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(5, 1, 5, 5));
@@ -27,15 +33,7 @@ public class Proyecto2 extends JFrame{
         
         
         // botones del menu principal 
-        
-        /*
-        btnRegistroDpto
-        btnRegistroArt
-        btnEliminarArt
-        btnTrasladoArt
-        btnEliminarDpto        
-        
-        */        
+            
         
         JButton btnRegistroDpto = new JButton("Registro de Departamentos");
         JButton btnRegistroArt = new JButton("Registro de Artículos");
@@ -44,11 +42,11 @@ public class Proyecto2 extends JFrame{
         JButton btnEliminarDpto = new JButton("Eliminación de departamentos");
         
         // asignacion de ActionListener a cada boton para abrir la ventana respectiva
-        btnRegistroDpto.addActionListener(e -> new RegistroDepartamentos().setVisible(true));
-        btnRegistroArt.addActionListener(e -> new RegistroArticulos().setVisible(true));
-        btnEliminarArt.addActionListener(e -> new EliminacionArticulos().setVisible(true));
-        btnTrasladoArt.addActionListener(e -> new TrasladoArticulos().setVisible(true));
-        btnEliminarDpto.addActionListener(e -> new EliminacionDepartamentos().setVisible(true));
+        btnRegistroDpto.addActionListener(e -> new RegistroDepartamentos(pilaDepartamentos, tope).setVisible(true));
+        btnRegistroArt.addActionListener(e -> new RegistroArticulos(pilaDepartamentos, tope).setVisible(true));
+        btnEliminarArt.addActionListener(e -> new EliminacionArticulos(pilaDepartamentos, tope).setVisible(true));
+        btnTrasladoArt.addActionListener(e -> new TrasladoArticulos(pilaDepartamentos, tope).setVisible(true));
+        btnEliminarDpto.addActionListener(e -> new EliminacionDepartamentos(pilaDepartamentos, tope).setVisible(true));
         
         // agriega botones al menu principal
         add (btnRegistroDpto);
@@ -56,12 +54,29 @@ public class Proyecto2 extends JFrame{
         add (btnEliminarArt);
         add (btnTrasladoArt);
         add (btnEliminarDpto);
-        
-        
+               
         
     }
     
-    
+    public static int getNuevoIdDepto() {
+        return idDepto++;
+    }
+
+    public static int getNuevoIdArticulo() {
+        return idArticulo++;
+    }
+
+    public static void setTope(int nuevoTope) {
+        tope = nuevoTope;
+    }
+
+    public static int getTope() {
+        return tope;
+    }
+
+    public static Departamento[] getPilaDepartamentos() {
+        return pilaDepartamentos;
+    }
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
