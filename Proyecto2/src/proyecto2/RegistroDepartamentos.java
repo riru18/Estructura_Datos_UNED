@@ -71,7 +71,8 @@ public class RegistroDepartamentos extends JFrame {
 
         Departamento nuevo = new Departamento(idDeptoActual++, nombre);
         pilaDepartamentos[++tope] = nuevo;
-
+        actualizarTabla();
+        txtNombre.setText("");
 
     }
     
@@ -80,7 +81,9 @@ public class RegistroDepartamentos extends JFrame {
     
     private void actualizarTabla(){
         modeloTabla.setRowCount(0);
-        
+        for (int i = tope; i >= 0; i--) {
+            modeloTabla.addRow(new Object[]{pilaDepartamentos[i].getId(), pilaDepartamentos[i].getNombre()});
+        }
         
     }
     
