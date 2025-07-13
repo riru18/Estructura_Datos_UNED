@@ -18,7 +18,7 @@ public class RegistroArticulos extends JFrame {
     
     
     public RegistroArticulos() {
-        setTitle("Registro de Departamentos");
+        setTitle("Registro de Artículos");
         setSize(900,600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);

@@ -18,7 +18,7 @@ public class EliminacionArticulos extends JFrame {
     
     
     public EliminacionArticulos() {
-        setTitle("Registro de Departamentos");
+        setTitle("Eliminación de Artículos");
         setSize(900,600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);

@@ -12,12 +12,19 @@ package proyecto2;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.table.DefaultTableModel;
 
 
 public class RegistroDepartamentos extends JFrame {
     
     //agregar variables a usar
     
+    
+    private static int idActual = 1;
+
+    private JTextField txtNombre;
+    private DefaultTableModel modeloTabla;
+    private JTable tabla;
     
     public RegistroDepartamentos() {
         setTitle("Registro de Departamentos");
@@ -26,6 +33,29 @@ public class RegistroDepartamentos extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         
+        
+        
+    }
+    
+    // prototipo metodo agregarDpto
+    private void agregarDepartamento() {
+        String nombre = txtNombre.getText().trim();
+
+            
+
+    }
+    
+    
+    //prototipo metodo actualizar
+    
+    private void actualizarTabla(){
+        modeloTabla.setRowCount(0);
+        
+        
+    }
+    
+    public static void main(String[] args){
+        new RegistroDepartamentos();
     }
     
 }
