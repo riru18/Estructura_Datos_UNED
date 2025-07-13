@@ -48,12 +48,19 @@ public class RegistroDepartamentos extends JFrame {
         add(panelSuperior, BorderLayout.NORTH);
         
         
+        modeloTabla = new DefaultTableModel(new Object[]{"ID", "Nombre"}, 0);
+        tabla = new JTable(modeloTabla);
+        tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scroll = new JScrollPane(tabla);
+        add(scroll, BorderLayout.CENTER);
+        
     }
     
     // prototipo metodo agregarDpto
     private void agregarDepartamento() {
         String nombre = txtNombre.getText().trim();
 
+        
             
 
     }
