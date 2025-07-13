@@ -20,7 +20,7 @@ public class RegistroDepartamentos extends JFrame {
     //agregar variables a usar
     
     
-    private static int idActual = 1;
+   
 
     private JTextField txtNombre;
     private DefaultTableModel modeloTabla;
