@@ -17,8 +17,10 @@ public class TrasladoArticulos extends JFrame {
     private Departamento[] pila;
     private int tope;
 
-    private JTable tablaDeptos;
-    private DefaultTableModel modeloDeptos;
+    private JTable tablaOrigen;
+    private JTable tablaDestino;
+    private DefaultTableModel modeloOrigen;
+    private DefaultTableModel modeloDestino;
 
     private JTextArea resultadoArea;
 
@@ -27,65 +29,95 @@ public class TrasladoArticulos extends JFrame {
         this.tope = topeExistente;
 
         setTitle("Traslado de Artículos");
-        setSize(800, 500);
+        setSize(1000, 550);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        modeloDeptos = new DefaultTableModel(new Object[]{"ID", "Nombre"}, 0) {
+        
+        JPanel panelTablas = new JPanel(new GridLayout(1, 2));
+
+        // Origen
+        modeloOrigen = new DefaultTableModel(new Object[]{"ID", "Nombre"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+        tablaOrigen = new JTable(modeloOrigen);
+        tablaOrigen.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JPanel panelOrigen = new JPanel(new BorderLayout());
+        panelOrigen.add(new JLabel("Departamento Origen", SwingConstants.CENTER), BorderLayout.NORTH);
+        panelOrigen.add(new JScrollPane(tablaOrigen), BorderLayout.CENTER);
+        panelTablas.add(panelOrigen);
 
-        tablaDeptos = new JTable(modeloDeptos);
-        tablaDeptos.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        JScrollPane scroll = new JScrollPane(tablaDeptos);
-        add(scroll, BorderLayout.CENTER);
+        // Destino
+        modeloDestino = new DefaultTableModel(new Object[]{"ID", "Nombre"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tablaDestino = new JTable(modeloDestino);
+        tablaDestino.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JPanel panelDestino = new JPanel(new BorderLayout());
+        panelDestino.add(new JLabel("Departamento Destino", SwingConstants.CENTER), BorderLayout.NORTH);
+        panelDestino.add(new JScrollPane(tablaDestino), BorderLayout.CENTER);
+        panelTablas.add(panelDestino);
 
-        resultadoArea = new JTextArea(5, 50);
-        resultadoArea.setEditable(false);
-        add(new JScrollPane(resultadoArea), BorderLayout.SOUTH);
-
+        add(panelTablas, BorderLayout.CENTER);
+        
+        // panel inferior con boton y resultado
+        JPanel panelInferior = new JPanel(new BorderLayout());
+        
         JButton btnTrasladar = new JButton("Trasladar Artículos");
         btnTrasladar.addActionListener(e -> realizarTraslado());
-        add(btnTrasladar, BorderLayout.NORTH);
+        panelInferior.add(btnTrasladar, BorderLayout.NORTH);
+        
+        // area de resultado
+        resultadoArea = new JTextArea(4, 40);
+        resultadoArea.setEditable(false);
+        panelInferior.add(new JScrollPane(resultadoArea), BorderLayout.CENTER);
 
-        llenarTabla();        
+        add(panelInferior, BorderLayout.SOUTH);
+        
+        llenarTablas();
+        
     }
 
-    private void llenarTabla() {
-        modeloDeptos.setRowCount(0);
+    private void llenarTablas() {
+        modeloOrigen.setRowCount(0);
+        modeloDestino.setRowCount(0);
         for (int i = tope; i >= 0; i--) {
-            modeloDeptos.addRow(new Object[]{
-                pila[i].getId(), pila[i].getNombre()
-            });
+            Object[] fila = new Object[]{pila[i].getId(), pila[i].getNombre()};
+            modeloOrigen.addRow(fila);
+            modeloDestino.addRow(fila);
         }
     }
 
     private void realizarTraslado() {
         resultadoArea.setText("");
 
-        int[] seleccion = tablaDeptos.getSelectedRows();
+        int filaOrigen = tablaOrigen.getSelectedRow();
+        int filaDestino = tablaDestino.getSelectedRow();
 
         if (tope < 1) {
             mostrar("Debe haber al menos dos departamentos registrados.");
             return;
         }
 
-        if (seleccion.length != 2) {
-            mostrar("Seleccione únicamente dos departamentos: origen y destino.");
+        if (filaOrigen == -1 || filaDestino == -1) {
+            mostrar("Debe seleccionar un departamento origen y uno destino.");
             return;
         }
 
-        Departamento origen = pila[tope - seleccion[0]];
-        Departamento destino = pila[tope - seleccion[1]];
-
-        if (origen == destino) {
-            mostrar("El departamento origen y destino no pueden ser el mismo.");
+        if (filaOrigen == filaDestino) {
+            mostrar("El origen y el destino no pueden ser el mismo departamento.");
             return;
         }
+
+        Departamento origen = pila[tope - filaOrigen];
+        Departamento destino = pila[tope - filaDestino];
 
         Articulo[] articulosOrigen = origen.getArticulos();
 
@@ -95,7 +127,6 @@ public class TrasladoArticulos extends JFrame {
         }
 
         int trasladados = 0;
-
         for (Articulo art : articulosOrigen) {
             if (destino.agregarArticulo(art)) {
                 origen.eliminarArticulo();
@@ -108,7 +139,7 @@ public class TrasladoArticulos extends JFrame {
 
         mostrar("Se trasladaron " + trasladados + " artículo(s) de '" + origen.getNombre()
                 + "' a '" + destino.getNombre() + "'.");
-
+       
     }
 
     private void mostrar(String mensaje) {

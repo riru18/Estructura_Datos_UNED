@@ -44,7 +44,12 @@ public class RegistroArticulos extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         
-        modelo = new DefaultTableModel(new Object[]{"ID", "Nombre"}, 0);
+        modelo = new DefaultTableModel(new Object[]{"ID", "Nombre"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tabla = new JTable(modelo);
         tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         add(new JScrollPane(tabla), BorderLayout.CENTER);
