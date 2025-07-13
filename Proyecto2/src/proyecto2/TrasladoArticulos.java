@@ -8,6 +8,22 @@ package proyecto2;
  *
  * @author Ricardo
  */
-public class TrasladoArticulos {
+import javax.swing.*;
+import java.awt.*;
+
+
+public class TrasladoArticulos extends JFrame {
+    
+    //agregar variables a usar
+    
+    
+    public TrasladoArticulos() {
+        setTitle("Registro de Departamentos");
+        setSize(900,600);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        
+    }
     
 }

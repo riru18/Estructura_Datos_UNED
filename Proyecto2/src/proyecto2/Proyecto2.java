@@ -11,7 +11,7 @@ package proyecto2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+//import java.awt.event.*;
 
 
 public class Proyecto2 extends JFrame{
@@ -37,30 +37,36 @@ public class Proyecto2 extends JFrame{
         
         */        
         
-        JButton btnRegistro = new JButton("Registro de Departamentos");
+        JButton btnRegistroDpto = new JButton("Registro de Departamentos");
         JButton btnRegistroArt = new JButton("Registro de Artículos");
         JButton btnEliminarArt = new JButton("Eliminación de artículos");
         JButton btnTrasladoArt = new JButton("Traslado de artículos");
         JButton btnEliminarDpto = new JButton("Eliminación de departamentos");
         
         // asignacion de ActionListener a cada boton para abrir la ventana respectiva
-        .addActionListener(e -> new ().setVisible(true));
-        .addActionListener(e -> new ().setVisible(true));
-        .addActionListener(e -> new ().setVisible(true));
-        .addActionListener(e -> new ().setVisible(true));
-        .addActionListener(e -> new ().setVisible(true));
+        btnRegistroDpto.addActionListener(e -> new RegistroDepartamentos().setVisible(true));
+        btnRegistroArt.addActionListener(e -> new RegistroArticulos().setVisible(true));
+        btnEliminarArt.addActionListener(e -> new EliminacionArticulos().setVisible(true));
+        btnTrasladoArt.addActionListener(e -> new TrasladoArticulos().setVisible(true));
+        btnEliminarDpto.addActionListener(e -> new EliminacionDepartamentos().setVisible(true));
+        
+        // agriega botones al menu principal
+        add (btnRegistroDpto);
+        add (btnRegistroArt);
+        add (btnEliminarArt);
+        add (btnTrasladoArt);
+        add (btnEliminarDpto);
+        
+        
         
     }
     
     
     
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("hello world");
+        SwingUtilities.invokeLater(() -> {
+            new Proyecto2().setVisible(true);
+        });
     }
     
 }

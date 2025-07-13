@@ -8,6 +8,22 @@ package proyecto2;
  *
  * @author Ricardo
  */
-public class EliminacionArticulos {
+import javax.swing.*;
+import java.awt.*;
+
+
+public class EliminacionArticulos extends JFrame {
+    
+    //agregar variables a usar
+    
+    
+    public EliminacionArticulos() {
+        setTitle("Registro de Departamentos");
+        setSize(900,600);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        
+    }
     
 }
