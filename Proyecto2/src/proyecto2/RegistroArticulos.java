@@ -99,12 +99,16 @@ public class RegistroArticulos extends JFrame {
             return;
         }
 
-        Departamento depto = pila[tope - fila]; // LIFO
-        Articulo nuevo = new Articulo(Proyecto2.getNuevoIdArticulo(), nombre, categoria);
+        Departamento depto = pila[tope - fila]; 
+        
+        int idTentativo = Proyecto2.getSiguienteIdArticulo();
+        Articulo nuevo = new Articulo(idTentativo, nombre, categoria);
 
-        if (!depto.agregarArticulo(nuevo)) {
-            JOptionPane.showMessageDialog(this, "Lista de artículos llena.");
-            return;
+        if (depto.agregarArticulo(nuevo)) {
+            Proyecto2.incrementarIdArticulo();            
+            txtNombreArticulo.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Cola del departamento llena. No se agregó el artículo.");
         }
         
         txtNombreArticulo.setText("");

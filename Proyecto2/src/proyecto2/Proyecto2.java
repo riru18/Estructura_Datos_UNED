@@ -58,12 +58,20 @@ public class Proyecto2 extends JFrame{
         
     }
     
-    public static int getNuevoIdDepto() {
-        return idDepto++;
+    public static int getSiguienteIdDepto() {
+        return idDepto;
     }
 
-    public static int getNuevoIdArticulo() {
-        return idArticulo++;
+    public static void incrementarIdDepto() {
+        idDepto++;
+    }
+
+    public static int getSiguienteIdArticulo() {
+        return idArticulo; 
+    }
+
+    public static void incrementarIdArticulo() {
+        idArticulo++; 
     }
 
     public static void setTope(int nuevoTope) {
