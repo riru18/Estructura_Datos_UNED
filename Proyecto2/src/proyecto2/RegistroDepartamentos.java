@@ -20,8 +20,7 @@ public class RegistroDepartamentos extends JFrame {
     //agregar variables a usar    
     
     private Departamento[] pila;
-    private int tope;  
-    
+    private int tope;     
    
 
     private JTextField txtNombre;
@@ -56,8 +55,7 @@ public class RegistroDepartamentos extends JFrame {
         };
         tabla = new JTable(modeloTabla);
         JScrollPane scroll = new JScrollPane(tabla);
-        add(scroll, BorderLayout.CENTER);
-        
+        add(scroll, BorderLayout.CENTER);        
 
         actualizarTabla();
     
@@ -71,20 +69,18 @@ public class RegistroDepartamentos extends JFrame {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre.");
             return;
         }
-        
-        
-        int idTentativo = Proyecto2.getSiguienteIdDepto();
 
         if (tope >= pila.length - 1) {
             JOptionPane.showMessageDialog(this, "Se alcanzó el límite de departamentos.");
             return;
         }
 
+        int idTentativo = Proyecto2.getSiguienteIdDepto();
+
         Departamento nuevo = new Departamento(idTentativo, nombre);
         pila[++tope] = nuevo;
-        Proyecto2.incrementarIdDepto();
-        
-        
+
+        Proyecto2.incrementarIdDepto(); 
         Proyecto2.setTope(tope);
 
         actualizarTabla();
